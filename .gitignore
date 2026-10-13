@@ -5,6 +5,10 @@ logisim.jar
 cs3410.jar
 riscv-probe.jar
 
+# 电路文件的时间戳备份（改电路前自动生成，不入库）
+circuits/*.BAK-*.circ
+circuits/_*.circ
+
 # 自建 Java 工具的编译输出
 tools/netlist/out/
 

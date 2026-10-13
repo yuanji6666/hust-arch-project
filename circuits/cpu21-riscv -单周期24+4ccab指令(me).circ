@@ -9463,7 +9463,6 @@ fe0e14e3 a00893 73 800e13 fedc04b7 fff00413 1045413 84e4b3
     <wire from="(320,7130)" to="(320,7150)"/>
     <wire from="(410,1230)" to="(450,1230)"/>
     <wire from="(340,7150)" to="(340,7190)"/>
-    <wire from="(440,2880)" to="(460,2880)"/>
     <wire from="(180,4660)" to="(340,4660)"/>
     <wire from="(340,7900)" to="(360,7900)"/>
     <wire from="(330,530)" to="(350,530)"/>
@@ -14118,6 +14117,62 @@ fe0e14e3 a00893 73 800e13 fedc04b7 fff00413 1045413 84e4b3
       <a name="labelfont" val="Dialog plain 12"/>
       <a name="labelcolor" val="#000000"/>
     </comp>
+  
+        <comp lib="1" loc="(380,8460)" name="AND Gate">
+          <a name="facing" val="east"/>
+          <a name="width" val="1"/>
+          <a name="size" val="30"/>
+          <a name="inputs" val="10"/>
+          <a name="out" val="01"/>
+          <a name="label" val="SLL_decode"/>
+          <a name="labelfont" val="Dialog plain 12"/>
+          <a name="labelcolor" val="#000000"/>
+          <a name="negate0" val="true"/>
+          <a name="negate1" val="true"/>
+          <a name="negate2" val="false"/>
+          <a name="negate3" val="false"/>
+          <a name="negate4" val="true"/>
+          <a name="negate5" val="false"/>
+          <a name="negate6" val="true"/>
+          <a name="negate7" val="true"/>
+          <a name="negate8" val="true"/>
+          <a name="negate9" val="true"/>
+        </comp>
+    <comp lib="1" loc="(440,8670)" name="OR Gate">
+          <a name="facing" val="east"/>
+          <a name="width" val="1"/>
+          <a name="size" val="30"/>
+          <a name="inputs" val="2"/>
+          <a name="out" val="01"/>
+          <a name="label" val=""/>
+          <a name="labelfont" val="Dialog plain 12"/>
+          <a name="labelcolor" val="#000000"/>
+        </comp>
+        <wire from="(60,8170)" to="(60,8410)"/>
+    <wire from="(60,8410)" to="(350,8410)"/>
+    <wire from="(80,8200)" to="(80,8420)"/>
+    <wire from="(80,8420)" to="(350,8420)"/>
+    <wire from="(100,8230)" to="(100,8430)"/>
+    <wire from="(100,8430)" to="(350,8430)"/>
+    <wire from="(120,8260)" to="(120,8440)"/>
+    <wire from="(120,8440)" to="(350,8440)"/>
+    <wire from="(140,8290)" to="(140,8450)"/>
+    <wire from="(140,8450)" to="(350,8450)"/>
+    <wire from="(160,8320)" to="(160,8470)"/>
+    <wire from="(160,8470)" to="(350,8470)"/>
+    <wire from="(180,8350)" to="(180,8480)"/>
+    <wire from="(180,8480)" to="(350,8480)"/>
+    <wire from="(200,8380)" to="(200,8490)"/>
+    <wire from="(200,8490)" to="(350,8490)"/>
+    <wire from="(220,8130)" to="(220,8500)"/>
+    <wire from="(220,8500)" to="(350,8500)"/>
+    <wire from="(240,8150)" to="(240,8510)"/>
+    <wire from="(240,8510)" to="(350,8510)"/>
+    <wire from="(380,8460)" to="(410,8460)"/>
+    <wire from="(410,8460)" to="(410,8660)"/>
+    <wire from="(440,2880)" to="(440,8680)"/>
+    <wire from="(440,8680)" to="(410,8680)"/>
+    <wire from="(460,8670)" to="(460,2880)"/>
   </circuit>
   <circuit name="◆ALU">
     <a name="circuit" val="◆ALU"/>
