@@ -1,0 +1,10 @@
+# Logisim 主程序（自资料包的 exe 抽出，构建产物，不入库）
+logisim.jar
+
+# Java 运行时产生的性能数据目录
+hsperfdata_*
+
+# Windows
+Thumbs.db
+Desktop.ini
+.DS_Store
