@@ -55,6 +55,13 @@ public class RomLoad {
         System.out.println("program words: " + words.size());
 
         Loader loader = new Loader(null);
+        // Logisim resolves "jar#cs3410.jar#..." relative to its current
+        // directory; if that fails it tries to pop a file chooser.  Point the
+        // JVM's working directory at the circuit's own folder (which holds both
+        // jars) so resolution always succeeds and no dialog is ever attempted.
+        if (in.getAbsoluteFile().getParentFile() != null) {
+            System.setProperty("user.dir", in.getAbsoluteFile().getParentFile().getAbsolutePath());
+        }
         LogisimFile lf = LogisimFile.load(in, loader);
 
         Circuit target = null;
