@@ -27,5 +27,13 @@ if not exist "%JAR%" (
   exit /b 1
 )
 
+rem Logisim resolves jar#... library references by looking in the .circ file's
+rem own directory first, then in its *current working directory*. If neither
+rem has cs3410.jar / riscv-probe.jar it pops a file-chooser dialog on every
+rem open. Pinning the working directory here makes the root copies win.
+cd /d "%~dp0"
+if not exist "cs3410.jar" echo [WARN] cs3410.jar not found in "%~dp0" - Logisim may ask for it.
+if not exist "riscv-probe.jar" echo [WARN] riscv-probe.jar not found in "%~dp0" - Logisim may ask for it.
+
 start "" "%JAVA%" -jar "%JAR%" %*
 endlocal

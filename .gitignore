@@ -1,6 +1,13 @@
 # Logisim 主程序（自资料包的 exe 抽出，构建产物，不入库）
 logisim.jar
 
+# 第三方库（资料包附带的 jar，与 logisim.jar 一样是二进制产物）
+cs3410.jar
+riscv-probe.jar
+
+# 自建 Java 工具的编译输出
+tools/netlist/out/
+
 # Java 运行时产生的性能数据目录
 hsperfdata_*
 

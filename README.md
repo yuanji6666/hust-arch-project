@@ -127,14 +127,29 @@ hust-arch-project/
 ├── README.md
 ├── Run-Logisim.cmd              # 启动器（自动定位 Java，支持拖入 .circ）
 ├── logisim.jar                  # Logisim 2.15.0.2 中文版（构建产物，已 gitignore）
+├── cs3410.jar                   # 第三方库：标准寄存器堆（已 gitignore）
+├── riscv-probe.jar              # 第三方库：指令探针 hust2020.Probe2（已 gitignore）
 ├── circuits/                    # 电路文件（详见下）
 ├── riscv-tools/                 # RISC-V 测试程序与工具（详见下）
 ├── docs/                        # 任务解码表、任务书及其文本提取
 ├── scripts/                     # 辅助脚本
+├── tools/                       # 自建工具（netlist 网表提取器）
 └── 2026秋硬件综合训练课设资料发布包/   # 课程原始资料包（只读参考，见下）
 ```
 
 > `logisim.jar` 必须与 `Run-Logisim.cmd` 同级（启动器用 `%~dp0logisim.jar` 定位）。
+
+#### 为什么 `cs3410.jar` / `riscv-probe.jar` 要放在根目录
+
+这两个 jar 是 `.circ` 内 `lib desc="jar#cs3410.jar#…"` 引用的第三方库。Logisim 的 `LibraryManager` 解析顺序是：
+
+1. **先**在 `.circ` 文件自身所在目录找；
+2. 找不到就回退到 **Logisim 进程的当前工作目录**；
+3. 再找不到就**弹文件选择框**要求手动指定。
+
+启动器把工作目录固定在项目根目录（见 `Run-Logisim.cmd` 里的 `cd /d "%~dp0"`），所以根目录必须有这两个 jar。**否则你打开任何不在 `circuits/` 里的 `.circ`（例如 `2026秋硬件综合训练课设资料发布包/电路框架-cpu21-riscv/cpu21-riscv.circ`、`中断按键信号产生.circ`）都会弹框要库。**
+
+`circuits/` 下也保留了一份副本，用于直接打开该目录内的 `.circ` 时第 1 步就能命中。
 
 ### circuits/ —— 电路文件
 
@@ -288,6 +303,12 @@ hust-arch-project/
 | **逐拍预期输出总表** | `riscv-tools/instruction-tests/CCAB输出汇总.docx` |
 | 汇编器 | `riscv-tools/instruction-tests/rars_f0c874c.jar` |
 | 控制信号表达式生成表 | `2026秋硬件综合训练课设资料发布包/电路框架-cpu21-riscv/RISC-V单周期硬布线控制器表达式自动生成（2022-8-19）.xlsx` |
+
+### 施工文档
+
+**`docs/ccab-encoding.md`** —— 4 条差异化指令的逐位编码、需要置位的控制信号、`SLL` 的施工步骤（含从电路实测出的或门引脚坐标）、`BGEU` 的陷阱说明、以及验收判据。
+
+> 该文档记录了**当前无法自动化的环节**：指令 ROM 只能由人在 Logisim GUI 里手动载入，组合电路也无法无头仿真。因此每条指令改完都必须人工载入 ROM 观察数码管与周期数。
 
 关于测试程序的两点要点：
 
