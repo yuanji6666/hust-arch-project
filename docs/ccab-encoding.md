@@ -164,13 +164,49 @@ java -jar rars_f0c874c.jar nc a mc CompactDataAtZero dump .text HexText SLL.hex 
 
 ---
 
-## 6. 已知无法自动化的环节
+## 6. 嵌入程序实测：电路基础是好的（已验证）
+
+`logisim.jar` 的 `-tty table` 模式会输出每个时钟节的 `RegWrite`、`MemWrite`、`PC`、`IR`、`RDin`、`MDin`、`LedData`。用它跑 `(me).circ` 可以得到**真实的控制信号输出**：
+
+```
+java -jar logisim.jar -tty table "circuits/cpu21-riscv -单周期24+4ccab指令(me).circ"
+```
+
+对 1546 个时钟节、66 个不同指令字做交叉核对，结果：
+
+| 指令类型 | 样例 IR | RegWrite | MemWrite | 判定 |
+|---|---|---|---|---|
+| `lw` | `00042983` (op=03) | 1 | 0 | ✓ |
+| R 型 | `0149a2b3` (op=33) | 1 | 0 | ✓ |
+| 分支 | `00028663` (op=63) | 0 | 0 | ✓ |
+| I 型 | `ffc48493` (op=13) | 1 | 0 | ✓ |
+| `ecall` | `00000073` (op=73) | 0 | 0 | ✓ |
+| `jal` | `fedff06f` (op=6f) | 1 | 0 | ✓ |
+| `sw` | `0084a023` (op=23) | 0 | 1 | ✓ 唯一 MemWrite=1 |
+
+**66 个不同 IR 全部与指令类型一致，0 例外。** 且每个 IR 的 `RegWrite`/`MemWrite` 取值恒定（不随 PC 变化），说明是纯组合译码。
+
+### 指令集覆盖情况
+
+嵌入的演示程序用到 19 条基本指令：
+
+```
+add addi and andi slli srai srli sub or ori xori lw sw beq bne slt jal jalr ecall
+```
+
+**未覆盖的 9 条**：`slti`、`sltu`、`csrrsi`、`csrrci`、`uret` + 你的 4 条（`sll`、`sltiu`、`lb`、`bgeu`）。
+
+> 注意这个程序是 `RiscV Probe` 组件自带的演示程序，**不是**你的 ROM 内容，也不受 `-load` 影响。它只覆盖 19 条，所以 `RegWrite`/`MemWrite` 的验证也只到这 19 条。
+
+
+
+## 7. 已知无法自动化的环节
 
 - **指令 ROM 无法从文件外部加载**：程序存在组件运行时状态里，不在 `.circ` 的任何属性中。`logisim.jar` 的 `-tty -load` 载入的是**数据存储器**，对指令存储器无效（已用两个内容完全不同的 hex 验证：trace 完全一致）。
 - **组合电路无法无头仿真**：`CircuitState.setValue()` 后 `Propagator.propagate()` 不生效（1024 行真值表只有 1 种输出组合）；`Simulator` 没有 `propagate()` 方法。Logisim 的仿真依赖 GUI 事件循环。
 - **结论**：**每条指令的验证都必须由人在 Logisim GUI 里载入 ROM 并观察**。
 
-## 7. 可用工具
+## 8. 可用工具
 
 `tools/netlist/Netlist.java` —— 用 Logisim 自己的 `getEnds()` 精确导出元件引脚坐标：
 
