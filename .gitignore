@@ -8,6 +8,10 @@ riscv-probe.jar
 # 自建 Java 工具的编译输出
 tools/netlist/out/
 
+# Python 缓存
+__pycache__/
+*.pyc
+
 # Java 运行时产生的性能数据目录
 hsperfdata_*
 
