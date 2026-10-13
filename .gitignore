@@ -1,4 +1,4 @@
-# Logisim 主程序（自资料包的 exe 抽出，构建产物，不入库）
+﻿# Logisim 主程序（自资料包的 exe 抽出，构建产物，不入库）
 logisim.jar
 
 # 第三方库（资料包附带的 jar，与 logisim.jar 一样是二进制产物）
@@ -23,3 +23,6 @@ hsperfdata_*
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# 调试用临时测试程序
+riscv-tools/my-4-tests/_*.hex
